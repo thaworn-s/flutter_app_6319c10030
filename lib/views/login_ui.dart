@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_6319c10030/views/register_ui.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginUI extends StatefulWidget {
   const LoginUI({Key? key}) : super(key: key);
@@ -9,6 +11,23 @@ class LoginUI extends StatefulWidget {
 }
 
 class _LoginUIState extends State<LoginUI> {
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+ 
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +62,7 @@ class _LoginUIState extends State<LoginUI> {
               style: TextStyle(
                 fontFamily: 'Kanit',
                 fontSize: 20,
+                color: Colors.grey,
               ),
             ),
             SizedBox(
@@ -53,6 +73,7 @@ class _LoginUIState extends State<LoginUI> {
               style: TextStyle(
                 fontFamily: 'Kanit',
                 fontSize: 20,
+                color: Colors.grey,
               ),
             ),
             Padding(
@@ -189,7 +210,12 @@ class _LoginUIState extends State<LoginUI> {
                   width: 6.0,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                            var rount = MaterialPageRoute(
+                              builder: (context) => RegisterUI(),
+                            );
+                            Navigator.of(context).push(rount);
+                          },
                   child: Text(
                     "Sign Up",
                     style: TextStyle(
